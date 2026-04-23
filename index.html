@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnkyJap | E-shop Japonais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-900" x-data="shop" x-cloak>
+
+    <div class="fixed bottom-5 right-5 z-[100]">
+        <template x-if="notification">
+            <div class="bg-black text-white px-6 py-3 shadow-2xl animate__animated animate__fadeInRight" x-text="notification"></div>
+        </template>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" @click="page = 'home'">
+                    <span class="logo-text text-2xl font-bold tracking-tighter italic">ANKY<span class="japan-red">JAP</span></span>
+                </div>
+
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <button @click="page = 'home'" :class="page === 'home' ? 'nav-active' : ''" class="nav-link">Accueil</button>
+                    <button @click="page = 'shop'" :class="page === 'shop' ? 'nav-active' : ''" class="nav-link">Boutique</button>
+                    <button @click="page = 'contact'" :class="page === 'contact' ? 'nav-active' : ''" class="nav-link">Contact</button>
+                </div>
+
+                <div class="flex items-center space-x-5">
+                    <button @click="cartOpen = true" class="relative group p-2">
+                        <svg class="w-6 h-6 group-hover:text-[#BC002D] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        <span class="cart-badge" x-text="cart.length"></span>
+                    </button>
+                    <button @click="mobileMenu = !mobileMenu" class="md:hidden">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div x-show="mobileMenu" class="md:hidden bg-white border-b p-4 space-y-4">
+            <button @click="page = 'home'; mobileMenu = false" class="block w-full text-left font-bold">ACCUEIL</button>
+            <button @click="page = 'shop'; mobileMenu = false" class="block w-full text-left font-bold">BOUTIQUE</button>
+            <button @click="page = 'contact'; mobileMenu = false" class="block w-full text-left font-bold">CONTACT</button>
+        </div>
+    </nav>
+
+    <div x-show="cartOpen" class="fixed inset-0 z-[60]" style="display: none;">
+        <div class="absolute inset-0 bg-black/50" @click="cartOpen = false"></div>
+        <div class="absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-xl p-6 flex flex-col animate__animated animate__slideInRight">
+            <div class="flex justify-between items-center border-b pb-4">
+                <h2 class="text-xl font-bold">MON PANIER</h2>
+                <button @click="cartOpen = false" class="text-3xl">&times;</button>
+            </div>
+            <div class="flex-1 overflow-y-auto py-4">
+                <template x-for="(item, index) in cart" :key="index">
+                    <div class="flex items-center space-y-4 border-b pb-4 mt-4">
+                        <img :src="item.image" class="w-16 h-20 object-cover">
+                        <div class="ml-4 flex-1">
+                            <p class="font-bold text-sm" x-text="item.name"></p>
+                            <p class="japan-red" x-text="item.price + '€'"></p>
+                        </div>
+                        <button @click="removeFromCart(index)" class="text-xs text-gray-400 underline">Enlever</button>
+                    </div>
+                </template>
+            </div>
+            <div class="pt-4 border-t">
+                <div class="flex justify-between text-xl font-bold mb-4">
+                    <span>TOTAL</span>
+                    <span x-text="totalPrice() + '€'"></span>
+                </div>
+                <button class="w-full bg-black text-white py-4 font-bold hover:bg-japan-red transition">COMMANDER</button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div x-show="page === 'home'" class="animate__animated animate__fadeIn">
+            <section class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="relative z-10 text-center text-white p-4">
+                    <h1 class="text-6xl md:text-8xl font-bold mb-4">ANKY<span class="japan-red italic">JAP</span></h1>
+                    <p class="text-xl tracking-[0.3em] uppercase mb-8">Tokyo Streetwear Culture</p>
+                    <button @click="page = 'shop'" class="btn-primary">EXPLORER</button>
+                </div>
+            </section>
+        </div>
+
+        <div x-show="page === 'shop'" class="max-w-7xl mx-auto py-16 px-4 animate__animated animate__fadeIn">
+            <h2 class="text-3xl font-bold mb-10 text-center uppercase tracking-widest italic border-b-2 border-black inline-block mx-auto">La Collection</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <template x-for="product in products" :key="product.id">
+                    <div class="product-card group">
+                        <div class="relative overflow-hidden aspect-[3/4] bg-gray-100">
+                            <img :src="product.image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <button @click="addToCart(product)" class="add-to-cart-btn">AJOUTER AU PANIER</button>
+                        </div>
+                        <h3 class="mt-4 font-bold text-lg" x-text="product.name"></h3>
+                        <p class="japan-red font-bold" x-text="product.price + '€'"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div x-show="page === 'contact'" class="max-w-xl mx-auto py-20 px-4 animate__animated animate__fadeIn">
+            <h2 class="text-4xl font-bold mb-10 text-center italic">CONTACT</h2>
+            <form @submit.prevent="showNotification('Message envoyé ! Arigato ! ⛩️')" class="space-y-6">
+                <input type="text" placeholder="NOM" required class="form-input">
+                <input type="email" placeholder="EMAIL" required class="form-input">
+                <textarea rows="4" placeholder="MESSAGE" required class="form-input"></textarea>
+                <button type="submit" class="w-full bg-black text-white py-4 font-bold hover:bg-japan-red">ENVOYER</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="py-10 text-center text-gray-400 text-xs border-t mt-20">
+        &copy; 2026 ANKYJAP STUDIO - DESIGNED FOR TOKYO STREETS
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
