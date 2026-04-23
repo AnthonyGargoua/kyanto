@@ -1,75 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&family=Plus+Jakarta+Sans:ital,wght@0,800;1,800&display=swap');
-
-:root {
-    --japan-red: #BC002D;
-}
-
-/* Cache le curseur par défaut sur PC */
-@media (min-width: 1024px) {
-    body { cursor: none !important; }
-    a, button, .cursor-pointer { cursor: none !important; }
-}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,800;1,800&display=swap');
 
 body {
-    font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
-    background-color: #fff;
-    -webkit-font-smoothing: antialiased;
 }
 
 [x-cloak] { display: none !important; }
 
-/* --- CURSEUR KATANA --- */
-#custom-cursor {
-    width: 40px;
-    height: 40px;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    transition: transform 0.1s ease-out;
-}
-
-/* --- RESPONSIVE TYPO --- */
-.hero-title {
-    font-size: clamp(3rem, 15vw, 12rem);
-    line-height: 0.9;
-}
-
-.drop-title {
-    font-size: clamp(4rem, 20vw, 15rem);
-    line-height: 0.8;
-}
-
-/* --- HERO SECTION --- */
+/* Hero Section */
 .hero-section {
     position: relative;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2000');
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('https://images.unsplash.com/photo-1533929736458-ca588d08c8be?q=80&w=2000');
     background-size: cover;
     background-position: center;
 }
 
-/* --- GRID FIXES --- */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+/* Animation Banderole Rouge */
+.marquee-content {
+    display: flex;
+    animation: marquee 15s linear infinite;
+    width: max-content;
 }
 
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.33%); }
+}
+
+/* Scrollbar Custom */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #BC002D; }
+
+/* Responsive Grid */
 @media (max-width: 640px) {
-    .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 1rem;
-    }
-}
-
-/* --- ANIMATIONS --- */
-.nav-link:hover {
-    color: var(--japan-red);
-    transform: skewX(-10deg);
+    h1 { font-size: 4rem !important; }
 }
