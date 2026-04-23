@@ -14,9 +14,34 @@ document.addEventListener('alpine:init', () => {
             setInterval(() => this.updateCounter(), 1000);
             this.initCursor();
             this.initAOS();
+            this.injectInkFilter();
+            this.initInkFX();
         },
 
-        // --- Système de Curseur Zinzin ---
+        // Injection du filtre SVG de distorsion (Dripping Effect)
+        injectInkFilter() {
+            const svg = `
+                <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+                    <filter id="ink-dripping">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.01 0.15" numOctaves="2" stitchTiles="stitch" result="noise" />
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="40" xChannelSelector="R" yChannelSelector="G" />
+                    </filter>
+                </svg>
+            `;
+            document.body.insertAdjacentHTML('beforeend', svg);
+        },
+
+        // Applique la classe ink-wrapper aux photos automatiquement
+        initInkFX() {
+            // On cible les images dans les cartes produits et les manifesto
+            const images = document.querySelectorAll('.product-card img, section img');
+            images.forEach(img => {
+                if(!img.parentElement.classList.contains('ink-wrapper')) {
+                    img.parentElement.classList.add('ink-wrapper');
+                }
+            });
+        },
+
         initCursor() {
             const cursor = document.createElement('div');
             cursor.id = 'cursor';
@@ -27,15 +52,14 @@ document.addEventListener('alpine:init', () => {
                 cursor.style.top = e.clientY + 'px';
             });
 
-            // Effet d'agrandissement sur les éléments cliquables
-            const links = document.querySelectorAll('button, a, .cursor-pointer');
-            links.forEach(link => {
-                link.addEventListener('mouseenter', () => cursor.style.transform = 'scale(3)');
-                link.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+            // Interaction curseur sur éléments cliquables
+            const targets = document.querySelectorAll('button, a, .ink-wrapper, .cursor-pointer');
+            targets.forEach(t => {
+                t.addEventListener('mouseenter', () => cursor.style.transform = 'scale(4)');
+                t.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
             });
         },
 
-        // --- Animations au Scroll (Manifesto) ---
         initAOS() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -43,7 +67,7 @@ document.addEventListener('alpine:init', () => {
                         entry.target.classList.add('aos-animate');
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.15 });
 
             document.querySelectorAll('.aos-init').forEach(el => observer.observe(el));
         },
@@ -56,14 +80,6 @@ document.addEventListener('alpine:init', () => {
                 this.countdown.h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
                 this.countdown.m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
                 this.countdown.s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            }
-        },
-
-        submitMail() {
-            if (this.email.includes('@')) {
-                this.mailSubmitted = true;
-            } else {
-                alert("Veuillez entrer un email valide.");
             }
         },
 
@@ -80,8 +96,7 @@ document.addEventListener('alpine:init', () => {
 
         addToCart(product) {
             this.cart.push(product);
-            // Petit flash rouge sur le panier pour le feedback
-            this.cartOpen = true; 
+            this.cartOpen = true;
         },
 
         removeFromCart(index) {
@@ -90,6 +105,10 @@ document.addEventListener('alpine:init', () => {
 
         totalPrice() {
             return this.cart.reduce((total, item) => total + item.price, 0);
+        },
+
+        submitMail() {
+            if (this.email.includes('@')) this.mailSubmitted = true;
         }
     }))
 });
