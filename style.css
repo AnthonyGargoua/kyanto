@@ -7,37 +7,42 @@ body {
 
 [x-cloak] { display: none !important; }
 
-/* Hero Section */
+/* Hero Section avec Photo de Temple Japonais */
 .hero-section {
     position: relative;
-    height: 90vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('https://images.unsplash.com/photo-1533929736458-ca588d08c8be?q=80&w=2000');
+    /* Image d'un temple japonais iconique */
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.4)), 
+                url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2000');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
 }
 
-/* Animation Banderole Rouge */
+/* Animation Banderole */
 .marquee-content {
     display: flex;
-    animation: marquee 15s linear infinite;
+    animation: marquee 12s linear infinite;
     width: max-content;
 }
 
 @keyframes marquee {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-33.33%); }
+    100% { transform: translateX(-50%); }
 }
 
-/* Scrollbar Custom */
-::-webkit-scrollbar { width: 6px; }
+/* Hover effect sur les images shop */
+.group:hover img {
+    filter: grayscale(0);
+}
+.group img {
+    filter: grayscale(0.5);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: #BC002D; }
-
-/* Responsive Grid */
-@media (max-width: 640px) {
-    h1 { font-size: 4rem !important; }
-}
