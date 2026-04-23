@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;700;900&display=swap');
 
 :root {
     --red: #ff0000;
-    --black: #000000;
 }
+
+[x-cloak] { display: none !important; }
 
 body { font-family: 'Space Grotesk', sans-serif; }
 h1, h2, h3, .font-black { font-family: 'Archivo Black', sans-serif; }
@@ -14,34 +15,35 @@ h1, h2, h3, .font-black { font-family: 'Archivo Black', sans-serif; }
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80');
     background-size: cover;
     background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .glitch-title {
-    font-size: clamp(3rem, 15vw, 10rem);
+    font-size: clamp(3rem, 12vw, 10rem);
     color: white;
     text-shadow: 6px 6px var(--red);
     line-height: 0.8;
     text-transform: uppercase;
 }
 
-/* INK SPLASH MASK */
+/* EFFET TACHE D'ENCRE */
 .ink-splash-mask {
-    width: 100%;
     height: 500px;
-    background: #000;
-    /* On utilise un clip-path complexe pour simuler la tâche d'encre */
-    clip-path: polygon(15% 5%, 85% 0%, 100% 30%, 95% 80%, 70% 100%, 30% 95%, 0% 70%, 5% 20%);
+    clip-path: polygon(10% 0, 95% 5%, 100% 40%, 85% 95%, 40% 100%, 0 85%, 5% 30%);
     overflow: hidden;
+    background: #000;
 }
 
 .ink-splash-mask img {
-    filter: grayscale(100%) contrast(130%);
-    transition: 0.5s;
+    filter: grayscale(100%) contrast(140%);
+    transition: 0.6s;
 }
 
 .ink-splash-mask:hover img {
     filter: grayscale(0%) contrast(100%);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 /* CARROUSEL */
@@ -60,19 +62,19 @@ h1, h2, h3, .font-black { font-family: 'Archivo Black', sans-serif; }
 .btn-shonen {
     background: var(--red);
     color: white;
-    padding: 1rem 3rem;
+    padding: 1.5rem 3.5rem;
     border: 4px solid black;
     font-weight: 900;
-    box-shadow: 10px 10px 0px black;
+    box-shadow: 12px 12px 0px black;
     transition: 0.2s;
     text-transform: uppercase;
 }
 
 .btn-shonen:hover {
-    transform: translate(10px, 10px);
+    transform: translate(12px, 12px);
     box-shadow: 0px 0px 0px black;
 }
 
-/* AOS */
-.aos-init { opacity: 0; transform: translateY(50px); transition: 1s ease-out; }
+/* AOS ANIMATIONS */
+.aos-init { opacity: 0; transform: translateY(50px); transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .aos-animate { opacity: 1; transform: translateY(0); }
