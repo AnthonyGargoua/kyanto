@@ -8,9 +8,8 @@ document.addEventListener('alpine:init', () => {
         sizes: ['S', 'M', 'L', 'XL'],
         shipping: 5.90,
         orderStep: 1,
-        formData: { prenom: '', nom: '', adresse: '', ville: '', cp: '' },
+        formData: { prenom: '', email: '', adresse: '' },
 
-        // Tes vrais univers avec les bonnes couleurs
         universes: {
             all: { bg: 'bg-white', text: 'text-black', accent: 'border-red-600', title: 'NOS COLLECTIONS' },
             tokyo: { bg: 'bg-indigo-950', text: 'text-fuchsia-500', accent: 'border-fuchsia-500', title: 'TOKYO NIGHTS' },
@@ -51,26 +50,20 @@ document.addEventListener('alpine:init', () => {
             this.cart.push({
                 ...product,
                 cartId: Date.now(),
-                finalImage: product.images[product.selectedColor]
+                finalImage: product.images[product.selectedColor],
+                size: product.selectedSize,
+                color: product.selectedColor
             });
             this.cartOpen = true;
         },
-
         removeFromCart(index) { this.cart.splice(index, 1); },
         totalPrice() { return this.cart.reduce((sum, item) => sum + item.price, 0); },
         toggleCart(state) { this.cartOpen = state; },
-        
-        goToCheckout() {
-            if(this.cart.length > 0) {
-                this.page = 'checkout';
-                this.cartOpen = false;
-                window.scrollTo(0,0);
-            }
+        goToCheckout() { this.page = 'checkout'; this.cartOpen = false; window.scrollTo(0,0); },
+        processOrder() { 
+            this.orderStep = 2; 
+            setTimeout(() => { this.orderStep = 3; this.cart = []; }, 2500); 
         },
-
-        processOrder() {
-            this.orderStep = 2;
-            setTimeout(() => { this.orderStep = 3; this.cart = []; }, 2500);
-        }
+        submitDropForm() { this.showPopup = true; }
     }));
 });
