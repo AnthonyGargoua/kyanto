@@ -138,10 +138,58 @@
         </div>
     </div>
 
-    <footer class="bg-black text-white py-16 px-6 border-t-8 border-red-600 text-center">
-        <div class="text-5xl font-black italic uppercase mb-8">KY<span class="text-red-600">ANTO</span></div>
-        <p class="text-xs text-gray-500 font-bold tracking-[0.5em] uppercase">© 2026 KYANTO CLOTHING - TOKYO STREETWEAR</p>
-    </footer>
+    <footer class="bg-black text-white pt-20 pb-10 px-6 border-t-[12px] border-red-600 relative overflow-hidden">
+    <div class="absolute top-0 right-0 text-[15rem] font-black italic text-white/5 pointer-events-none select-none translate-x-1/4 -translate-y-1/4">
+        KYANTO
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+        <div class="md:col-span-1">
+            <div class="text-4xl font-[900] italic uppercase mb-4">KY<span class="text-red-600">ANTO</span></div>
+            <p class="text-gray-400 font-bold text-xs leading-relaxed uppercase tracking-widest">
+                Deux identités.<br>Une seule direction.<br>Le Clan du Streetwear.
+            </p>
+        </div>
+
+        <div>
+            <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Collections</h4>
+            <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
+                <li><button @click="page='shop'; filter='tokyo'" class="hover:text-red-600 transition">Tokyo Nights</button></li>
+                <li><button @click="page='shop'; filter='cyber'" class="hover:text-red-600 transition">Cyber-Punk</button></li>
+                <li><button @click="page='shop'; filter='zen'" class="hover:text-red-600 transition">Zen Minimal</button></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Support</h4>
+            <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
+                <li><a href="#" class="hover:text-red-600 transition">FAQ</a></li>
+                <li><a href="#" class="hover:text-red-600 transition">Livraison</a></li>
+                <li><a href="#" class="hover:text-red-600 transition">Retours</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Rejoindre le Clan</h4>
+            <div class="flex gap-6">
+                <a href="#" class="group">
+                    <span class="block border-2 border-white p-2 group-hover:bg-red-600 group-hover:border-red-600 transition">INSTA</span>
+                </a>
+                <a href="#" class="group">
+                    <span class="block border-2 border-white p-2 group-hover:bg-red-600 group-hover:border-red-600 transition">TIKTOK</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-[10px] font-black text-gray-600 tracking-[0.5em]">
+        <p>© 2026 KYANTO CLOTHING - DESIGNED FOR THE STREETS</p>
+        <div class="flex gap-8">
+            <a href="#" class="hover:text-white transition">CGV</a>
+            <a href="#" class="hover:text-white transition">CONFIDENTIALITÉ</a>
+        </div>
+    </div>
+</footer>
 
     <div x-show="cartOpen" class="fixed inset-0 z-[150]" x-cloak>
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="toggleCart(false)"></div>
