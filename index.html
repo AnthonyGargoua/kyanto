@@ -207,9 +207,17 @@
             <p class="text-xl font-bold italic mb-12 text-gray-400 uppercase tracking-widest">Inscris-toi pour l'accès prioritaire.</p>
             
             <form @submit.prevent="submitDropForm" class="bg-white p-8 border-t-8 border-red-600 text-black shadow-[20px_20px_0px_#ff0000] text-left">
-                <div class="space-y-4">
-                    <label class="block text-[10px] font-black uppercase">Email Secret</label>
-                    <input type="email" placeholder="KYANTO@GHOST.COM" class="w-full border-4 border-black p-4 font-black uppercase outline-none focus:bg-red-50 text-xl" required>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-1">Ton Prénom</label>
+                        <input type="text" placeholder="KYLLIAN" class="w-full border-4 border-black p-4 font-black uppercase outline-none focus:bg-red-50 text-xl" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-1">Email Secret</label>
+                        <input type="email" placeholder="KYANTO@GHOST.COM" class="w-full border-4 border-black p-4 font-black uppercase outline-none focus:bg-red-50 text-xl" required>
+                    </div>
+
                     <button type="submit" class="w-full bg-black text-white py-5 font-black uppercase italic text-2xl skew-btn hover:bg-red-600 transition shadow-[5px_5px_0px_#ff0000]">
                         <span class="skew-content">REJOINDRE LE CLAN</span>
                     </button>
