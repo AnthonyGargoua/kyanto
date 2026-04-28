@@ -43,6 +43,45 @@ document.addEventListener('alpine:init', () => {
                 colors: [{name: 'Blanc', hex: '#fff'}, {name: 'Jaune', hex: '#facc15'}],
                 selectedSize: 'L',
                 selectedColor: 'Blanc'
+            },
+            {
+                id: 3,
+                name: "Pant 'Zen Cargo'",
+                price: 95,
+                category: 'zen',
+                images: {
+                    'Beige': 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600',
+                    'Olive': 'https://images.unsplash.com/photo-1584102860163-22047e2ee485?q=80&w=600'
+                },
+                colors: [{name: 'Beige', hex: '#d2b48c'}, {name: 'Olive', hex: '#556b2f'}],
+                selectedSize: 'M',
+                selectedColor: 'Beige'
+            },
+            {
+                id: 4,
+                name: "Veste 'Cyber-Shell'",
+                price: 120,
+                category: 'cyber',
+                images: {
+                    'Noir': 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=600',
+                    'Gris': 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=600'
+                },
+                colors: [{name: 'Noir', hex: '#000'}, {name: 'Gris', hex: '#4b5563'}],
+                selectedSize: 'L',
+                selectedColor: 'Noir'
+            },
+            {
+                id: 5,
+                name: "Kimono 'Street-Zen'",
+                price: 75,
+                category: 'zen',
+                images: {
+                    'Blanc': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600',
+                    'Noir': 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=600'
+                },
+                colors: [{name: 'Blanc', hex: '#fff'}, {name: 'Noir', hex: '#000'}],
+                selectedSize: 'M',
+                selectedColor: 'Blanc'
             }
         ],
 
@@ -64,6 +103,10 @@ document.addEventListener('alpine:init', () => {
             this.orderStep = 2; 
             setTimeout(() => { this.orderStep = 3; this.cart = []; }, 2500); 
         },
-        submitDropForm() { this.showPopup = true; }
+        submitDropForm() { 
+            this.showPopup = true;
+            this.formData.prenom = ''; 
+            this.formData.email = '';
+        }
     }));
 });
