@@ -8,7 +8,9 @@ document.addEventListener('alpine:init', () => {
         sizes: ['S', 'M', 'L', 'XL'],
         shipping: 5.90,
         orderStep: 1,
-        formData: { prenom: '', email: '', adresse: '' },
+        // Remplace ta ligne formData actuelle par celle-ci :
+        formDataCheckout: { prenom: '', adresse: '', ville: '', cp: '' },
+        formDataDrop: { prenom: '', email: '' },
 
         universes: {
             all: { bg: 'bg-white', text: 'text-black', accent: 'border-red-600', title: 'NOS COLLECTIONS' },
