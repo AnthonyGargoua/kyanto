@@ -1,1 +1,29 @@
+/* Carrousel infini */
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 
+.animate-infinite-scroll {
+    display: flex;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+}
+
+.animate-infinite-scroll:hover { animation-play-state: paused; }
+
+/* Badges flottants */
+@keyframes float {
+    0%, 100% { transform: rotate(-12deg) translateY(0px); }
+    50% { transform: rotate(-12deg) translateY(-5px); }
+}
+
+.badge-new { animation: float 3s ease-in-out infinite; }
+
+/* AOS - Animation on scroll */
+.aos-init { 
+    opacity: 0; 
+    transform: translateY(30px); 
+    transition: 1s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+.aos-animate { opacity: 1; transform: translateY(0); }
