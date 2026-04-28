@@ -4,23 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KYANTO | Deux identités, une seule direction</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        [x-cloak] { display: none !important; }
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-infinite-scroll {
-            display: flex;
-            width: max-content;
-            animation: scroll 30s linear infinite;
-        }
-        .animate-infinite-scroll:hover { animation-play-state: paused; }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
 </head>
 <body class="bg-white text-black font-sans overflow-x-hidden" x-data="shop">
 
@@ -68,12 +58,12 @@
 
             <section class="py-16 md:py-24 max-w-7xl mx-auto px-6">
                 <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-                    <div class="w-full md:w-1/2 ink-splash-mask shadow-2xl overflow-hidden border-4 border-black">
+                    <div class="w-full md:w-1/2 ink-splash-mask shadow-2xl overflow-hidden border-4 border-black aos-init">
                         <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2070" class="w-full h-full object-cover">
                     </div>
-                    <div class="w-full md:w-1/2">
+                    <div class="w-full md:w-1/2 aos-init">
                         <h2 class="text-4xl md:text-6xl font-black italic uppercase leading-none">Une marque qui<br><span class="text-red-600 italic">Représente un état d'esprit</span></h2>
-                        <p class="text-lg md:text-xl font-bold mt-6 italic">KYANTO est née de l'histoire de deux amis d'enfance, Kyllian et Anthony. Deux personnalités différentes, mais une même façon de voir le monde : simple, calme, et authentique.</p>
+                        <p class="text-lg md:text-xl font-bold mt-6 italic">KYANTO est née de l'histoire de deux amis d'enfance, Kyllian et Anthony. Deux personnalités différentes, mais une même façon de voir le monde.</p>
                     </div>
                 </div>
             </section>
@@ -86,9 +76,7 @@
                                 <div class="w-[280px] md:w-[350px] bg-white border-4 border-black p-4 mx-4 flex flex-col group">
                                     <div class="relative overflow-hidden">
                                         <img :src="product.image" class="w-full h-64 object-cover">
-                                        <button @click="addToCart(product)" class="absolute inset-x-0 bottom-0 bg-red-600 text-white py-3 font-black uppercase translate-y-full group-hover:translate-y-0 transition-transform text-sm">
-                                            Ajouter +
-                                        </button>
+                                        <button @click="addToCart(product)" class="absolute inset-x-0 bottom-0 bg-red-600 text-white py-3 font-black uppercase translate-y-full group-hover:translate-y-0 transition-transform text-sm">Ajouter +</button>
                                     </div>
                                     <div class="flex justify-between items-center mt-4">
                                         <h3 class="text-lg font-black uppercase" x-text="product.name"></h3>
@@ -106,9 +94,7 @@
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b-8 border-black pb-6 gap-6">
                 <div>
                     <h2 class="text-5xl md:text-8xl font-black italic uppercase leading-none">Stock<span class="text-red-600">.01</span></h2>
-                    <p class="font-bold text-gray-500 mt-2 uppercase tracking-widest">Collection Automne / Hiver 2026</p>
                 </div>
-                
                 <div class="flex gap-2 overflow-x-auto pb-2">
                     <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-black text-white' : 'border-2 border-black'" class="px-6 py-2 font-black uppercase text-xs transition whitespace-nowrap">Tout</button>
                     <button @click="filter = 'hoodie'" :class="filter === 'hoodie' ? 'bg-black text-white' : 'border-2 border-black'" class="px-6 py-2 font-black uppercase text-xs transition whitespace-nowrap">Hoodies</button>
@@ -120,35 +106,15 @@
                 <template x-for="product in products" :key="product.id">
                     <div x-show="filter === 'all' || product.category === filter" 
                          class="group relative flex flex-col bg-white border-4 border-black hover:shadow-[12px_12px_0px_#ff0000] transition-all duration-300">
-                        
-                        <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
-                            <template x-if="product.new">
-                                <span class="bg-red-600 text-white text-[10px] font-black px-3 py-1 uppercase italic -rotate-12 border-2 border-black">New</span>
-                            </template>
-                        </div>
-
                         <div class="aspect-[3/4] overflow-hidden bg-gray-100 border-b-4 border-black relative">
                             <img :src="product.image" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <button @click="addToCart(product)" class="absolute inset-0 bg-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span class="bg-black text-white px-6 py-3 font-black uppercase translate-y-4 group-hover:translate-y-0 transition-transform shadow-xl">
-                                    Ajouter au pack +
-                                </span>
+                                <span class="bg-black text-white px-6 py-3 font-black uppercase shadow-xl">Ajouter au pack +</span>
                             </button>
                         </div>
-
                         <div class="p-5 flex flex-col flex-1">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-black uppercase text-lg leading-tight" x-text="product.name"></h3>
-                                <span class="text-xl font-black text-red-600" x-text="product.price + '€'"></span>
-                            </div>
-                            <p class="text-[10px] text-gray-500 font-bold uppercase mb-4">High Quality Textile • Made for Shinobi</p>
-                            <div class="flex gap-2 mt-auto">
-                                <template x-for="size in ['S', 'M', 'L', 'XL']">
-                                    <span class="text-[10px] font-black border border-black px-2 py-1 hover:bg-black hover:text-white cursor-pointer transition">
-                                        <span x-text="size"></span>
-                                    </span>
-                                </template>
-                            </div>
+                            <h3 class="font-black uppercase text-lg" x-text="product.name"></h3>
+                            <span class="text-xl font-black text-red-600" x-text="product.price + '€'"></span>
                         </div>
                     </div>
                 </template>
@@ -157,110 +123,23 @@
 
         <div x-show="page === 'drop'" class="min-h-screen bg-black text-white flex flex-col justify-center items-center px-4" x-transition x-cloak>
             <h2 class="text-5xl md:text-[10rem] font-black italic leading-none mb-8 text-center">JUNE <span class="text-red-600">2026</span></h2>
-            
             <div class="grid grid-cols-2 md:flex gap-4 md:gap-10 mb-16">
                 <div class="bg-white text-black p-4 md:p-6 border-b-8 border-red-600 text-center"><span class="text-4xl md:text-7xl font-black" x-text="countdown.d"></span><p class="text-xs font-bold uppercase">Jours</p></div>
                 <div class="bg-white text-black p-4 md:p-6 border-b-8 border-red-600 text-center"><span class="text-4xl md:text-7xl font-black" x-text="countdown.h"></span><p class="text-xs font-bold uppercase">Heures</p></div>
                 <div class="bg-white text-black p-4 md:p-6 border-b-8 border-red-600 text-center"><span class="text-4xl md:text-7xl font-black" x-text="countdown.m"></span><p class="text-xs font-bold uppercase">Mins</p></div>
                 <div class="bg-white text-black p-4 md:p-6 border-b-8 border-red-600 text-center"><span class="text-4xl md:text-7xl font-black" x-text="countdown.s"></span><p class="text-xs font-bold uppercase">Secs</p></div>
             </div>
-
-            <div class="w-full max-w-lg">
-                <template x-if="!mailSubmitted">
-                    <form @submit.prevent="submitMail()" class="flex flex-col md:flex-row border-4 border-white p-2">
-                        <input x-model="email" type="email" placeholder="ACCÈS@SHINOBI.JP" class="bg-transparent flex-1 p-4 outline-none font-bold text-white uppercase text-center md:text-left" required>
-                        <button type="submit" class="bg-white text-black px-8 py-4 font-black uppercase hover:bg-red-600 hover:text-white transition">S'inscrire</button>
-                    </form>
-                </template>
-                <template x-if="mailSubmitted">
-                    <div class="bg-red-600 p-8 border-4 border-white text-center animate__animated animate__zoomIn">
-                        <h3 class="text-2xl font-black uppercase italic">Enregistré dans la base ⛩️</h3>
-                    </div>
-                </template>
-            </div>
         </div>
     </main>
 
     <footer class="bg-black text-white pt-20 pb-10 border-t-8 border-red-600">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-                <div>
-                    <h2 class="text-4xl font-black italic mb-6 uppercase tracking-tighter">
-                        KY<span class="text-red-600">ANTO</span>
-                    </h2>
-                    <p class="text-gray-400 font-bold leading-relaxed mb-6 italic">
-                        Deux identités, une seule direction. La fusion parfaite de l'esthétique urbaine et de la philosophie Shonen.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-12 h-12 border-2 border-white flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all font-black italic">IG</a>
-                        <a href="#" class="w-12 h-12 border-2 border-white flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all font-black italic">TT</a>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 uppercase font-black italic">
-                    <div class="flex flex-col gap-3">
-                        <h3 class="text-red-600 text-sm mb-2 not-italic tracking-[0.2em]">Navigation</h3>
-                        <button @click="page = 'home'; window.scrollTo(0,0)" class="text-left hover:translate-x-2 transition-transform">Accueil</button>
-                        <button @click="page = 'shop'; window.scrollTo(0,0)" class="text-left hover:translate-x-2 transition-transform">Boutique</button>
-                        <button @click="page = 'drop'; window.scrollTo(0,0)" class="text-left hover:translate-x-2 transition-transform">Drops</button>
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <h3 class="text-red-600 text-sm mb-2 not-italic tracking-[0.2em]">Infos</h3>
-                        <a href="#" class="text-gray-400 hover:text-white transition">Livraison</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">Retours</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">Contact</a>
-                    </div>
-                </div>
-
-                <div class="bg-red-600 p-6 border-4 border-white rotate-2 hover:rotate-0 transition-transform">
-                    <h3 class="text-2xl font-black mb-4 uppercase italic">Clan Kyanto</h3>
-                    <p class="text-sm font-bold mb-4 uppercase">Reçois les accès prioritaires.</p>
-                    <form @submit.prevent="submitMail()" class="flex flex-col gap-2">
-                        <input x-model="email" type="email" placeholder="TON EMAIL" class="p-3 bg-white text-black font-bold outline-none border-2 border-black uppercase text-xs">
-                        <button class="bg-black text-white p-3 font-black uppercase text-xs hover:bg-white hover:text-black transition">S'inscrire</button>
-                    </form>
-                </div>
-            </div>
-            <div class="border-t-2 border-white/10 pt-8 text-center md:text-left">
-                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">© 2026 KYANTO - DESIGNER AVEC L'ESPRIT JAPONAIS</p>
-            </div>
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">© 2026 KYANTO - DESIGNER AVEC L'ESPRIT JAPONAIS</p>
         </div>
     </footer>
 
-    <div x-show="cartOpen" class="fixed inset-0 z-[100]" x-cloak>
-        <div class="absolute inset-0 bg-black/90" @click="toggleCart(false)" x-show="cartOpen" x-transition.opacity></div>
-        <div class="absolute inset-y-0 right-0 w-full md:max-w-md bg-white p-6 md:p-8 border-l-0 md:border-l-8 border-red-600 overflow-y-auto" x-show="cartOpen" x-transition.origin.right>
-            <div class="flex justify-between items-center mb-10 border-b-4 border-black pb-4">
-                <h2 class="text-3xl md:text-4xl font-black italic">PANIER</h2>
-                <button @click="toggleCart(false)" class="text-4xl font-light">&times;</button>
-            </div>
-            
-            <div class="space-y-4">
-                <template x-for="(item, index) in cart" :key="index">
-                    <div class="flex gap-4 p-2 border-2 border-black bg-gray-50">
-                        <img :src="item.image" class="w-16 h-20 object-cover border border-black">
-                        <div class="flex-1">
-                            <p class="font-black text-xs uppercase" x-text="item.name"></p>
-                            <p class="text-red-600 font-bold" x-text="item.price + '€'"></p>
-                        </div>
-                        <button @click="removeFromCart(index)" class="font-black text-xs underline text-red-600">SUPPRIMER</button>
-                    </div>
-                </template>
-                
-                <template x-if="cart.length === 0">
-                    <p class="text-center font-bold italic py-10 text-gray-400 uppercase">Le pack est vide...</p>
-                </template>
-            </div>
-
-            <div class="mt-10 pt-6 border-t-4 border-black" x-show="cart.length > 0">
-                <div class="flex justify-between text-2xl font-black uppercase mb-6">
-                    <span>Total</span><span x-text="totalPrice() + '€'"></span>
-                </div>
-                <button class="w-full bg-black text-white py-6 font-black uppercase hover:bg-red-600 transition">Commander</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
