@@ -3,28 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KYANTO | Boutique Officielle</title>
+    <title>KYANTO | Deux identités, une seule direction</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         [x-cloak] { display: none !important; }
-        .skew-btn { transform: skewX(-15deg); }
+        .skew-btn { transform: skewX(-15deg); transition: all 0.3s ease; }
         .skew-content { transform: skewX(15deg); display: inline-block; }
+        .skew-btn:hover { transform: skewX(-15deg) scale(1.05); }
+        
+        /* Animation du texte qui défile */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-infinite-scroll {
+            display: flex;
+            width: max-content;
+            animation: scroll 20s linear infinite;
+        }
+        .animate-infinite-scroll:hover { animation-play-state: paused; }
     </style>
 </head>
-<body class="bg-white text-black font-sans" x-data="shop">
+<body class="bg-white text-black font-sans overflow-x-hidden" x-data="shop">
 
-    <div x-show="showPopup" 
-         x-transition.opacity
-         class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" x-cloak>
+    <div x-show="showPopup" x-transition.opacity class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" x-cloak>
         <div class="bg-white p-8 border-8 border-red-600 max-w-sm w-full text-center shadow-[20px_20px_0px_#000]">
             <div class="text-6xl mb-4">🔥</div>
-            <h3 class="text-3xl font-black uppercase italic mb-2">Inscrit !</h3>
+            <h3 class="text-3xl font-black uppercase italic mb-2 text-red-600">Inscrit !</h3>
             <p class="font-bold mb-6">Tu recevras un accès prioritaire au prochain drop par email.</p>
             <button @click="showPopup = false" class="w-full bg-black text-white py-3 font-black uppercase skew-btn">
-                <span class="skew-content">OK !</span>
+                <span class="skew-content">RETOUR AU SHOP</span>
             </button>
         </div>
     </div>
@@ -33,7 +44,7 @@
         <div class="absolute inset-0 bg-black/40" @click="toggleCart(false)"></div>
         <div class="absolute inset-y-0 right-0 w-full max-w-md bg-white border-l-8 border-black shadow-2xl flex flex-col">
             <div class="p-6 border-b-4 border-black flex justify-between items-center bg-black text-white">
-                <h2 class="text-2xl font-black uppercase italic">Ton Pack (<span x-text="cart.length"></span>)</h2>
+                <h2 class="text-2xl font-black uppercase italic tracking-tighter">Ton Pack (<span x-text="cart.length"></span>)</h2>
                 <button @click="toggleCart(false)" class="text-3xl font-black">&times;</button>
             </div>
             
@@ -43,7 +54,7 @@
                         <img :src="item.image" class="w-24 h-24 object-cover border-4 border-black">
                         <div class="flex-1 text-sm">
                             <h4 class="font-black uppercase" x-text="item.name"></h4>
-                            <p class="text-gray-500 font-bold">Taille: <span class="text-black" x-text="item.selectedSize"></span> | Couleur: <span class="text-black" x-text="item.selectedColor"></span></p>
+                            <p class="text-gray-500 font-bold">Taille: <span class="text-black" x-text="item.selectedSize"></span> | <span class="text-black" x-text="item.selectedColor"></span></p>
                             <div class="flex justify-between items-end mt-2">
                                 <span class="text-lg font-black text-red-600" x-text="item.price + '€'"></span>
                                 <button @click="removeFromCart(index)" class="text-red-600 font-black uppercase text-[10px] underline">Retirer</button>
@@ -85,6 +96,54 @@
         </button>
     </nav>
 
+    <div x-show="page === 'home'" x-transition x-cloak>
+        <section class="bg-black text-white min-h-[90vh] flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+            <h1 class="text-7xl md:text-[12rem] font-black italic uppercase leading-none z-10 animate__animated animate__fadeInDown">
+                KY<span class="text-red-600 underline">ANTO</span>
+            </h1>
+            <p class="text-xl md:text-3xl font-black italic uppercase tracking-[0.3em] mt-4 z-10 animate__animated animate__fadeInUp">
+                Deux identités, une seule direction
+            </p>
+            <button @click="page = 'shop'" class="mt-12 bg-red-600 text-white px-12 py-5 text-2xl font-black uppercase italic skew-btn z-10 shadow-[10px_10px_0px_#fff]">
+                <span class="skew-content">Voir la collection</span>
+            </button>
+        </section>
+
+        <section class="py-24 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="border-8 border-black p-2 shadow-[20px_20px_0px_#ff0000]">
+                <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2070" alt="Japanese Street" class="grayscale hover:grayscale-0 transition-all duration-1000">
+            </div>
+            <div>
+                <h2 class="text-5xl md:text-7xl font-black italic uppercase leading-tight mb-8">Un État<br><span class="text-red-600">d'Esprit.</span></h2>
+                <p class="text-xl font-bold italic leading-relaxed text-gray-800">
+                    KYANTO est née de l'histoire de deux amis d'enfance, Kyllian et Anthony. Deux personnalités différentes, mais une même passion pour l'esthétique nippone et le streetwear brut.
+                </p>
+                <div class="mt-10 h-2 w-32 bg-red-600"></div>
+            </div>
+        </section>
+
+        <section class="bg-black py-20 border-y-8 border-red-600 overflow-hidden">
+            <div class="animate-infinite-scroll">
+                <template x-for="i in 3">
+                    <div class="flex">
+                        <template x-for="product in products" :key="product.id + '-' + i">
+                            <div class="w-[300px] md:w-[400px] mx-6 bg-white border-4 border-black p-4 group cursor-pointer" @click="page = 'shop'">
+                                <div class="overflow-hidden mb-4 border-2 border-black">
+                                    <img :src="product.image" class="w-full h-80 object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105">
+                                </div>
+                                <div class="flex justify-between font-black uppercase italic">
+                                    <span x-text="product.name"></span>
+                                    <span class="text-red-600" x-text="product.price + '€'"></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </section>
+    </div>
+
     <main x-show="page === 'shop'" class="max-w-7xl mx-auto py-12 px-6" x-transition x-cloak>
         <div class="mb-12">
             <h2 class="text-6xl md:text-8xl font-black italic uppercase leading-none">Nos <span class="text-red-600">Collections</span></h2>
@@ -112,17 +171,17 @@
 
                     <div class="space-y-4 mb-6">
                         <div>
-                            <span class="text-[10px] font-black uppercase">Taille :</span>
+                            <span class="text-[10px] font-black uppercase italic">Taille :</span>
                             <div class="flex gap-2 mt-1">
                                 <template x-for="size in sizes">
                                     <button @click="product.selectedSize = size" 
-                                            :class="product.selectedSize === size ? 'bg-black text-white' : 'border-2 border-black'"
+                                            :class="product.selectedSize === size ? 'bg-black text-white' : 'border-2 border-black hover:bg-gray-100'"
                                             class="w-10 h-10 font-black text-xs flex items-center justify-center transition" x-text="size"></button>
                                 </template>
                             </div>
                         </div>
                         <div>
-                            <span class="text-[10px] font-black uppercase">Couleur :</span>
+                            <span class="text-[10px] font-black uppercase italic">Couleur :</span>
                             <div class="flex gap-2 mt-1">
                                 <template x-for="color in product.colors">
                                     <button @click="product.selectedColor = color.name" 
@@ -145,46 +204,44 @@
     <main x-show="page === 'drop'" class="min-h-screen bg-black text-white flex flex-col items-center justify-center py-20 px-6" x-transition x-cloak>
         <div class="text-center max-w-2xl">
             <h2 class="text-7xl md:text-9xl font-black italic uppercase leading-none mb-4 animate-pulse">Next <span class="text-red-600">Drop</span></h2>
-            <p class="text-xl font-bold italic mb-12 text-gray-400">Ne ratez pas l'ouverture. Les stocks s'envolent en quelques minutes.</p>
+            <p class="text-xl font-bold italic mb-12 text-gray-400 uppercase tracking-widest">Inscris-toi pour l'accès prioritaire.</p>
             
-            <form @submit.prevent="submitDropForm" class="bg-white p-8 border-t-8 border-red-600 text-black shadow-[15px_15px_0px_#ff0000]">
+            <form @submit.prevent="submitDropForm" class="bg-white p-8 border-t-8 border-red-600 text-black shadow-[20px_20px_0px_#ff0000] text-left">
                 <div class="space-y-4">
-                    <input type="text" placeholder="Ton Prénom" class="w-full border-4 border-black p-4 font-black uppercase outline-none focus:bg-red-50" required>
-                    <input type="email" placeholder="Ton Email" class="w-full border-4 border-black p-4 font-black uppercase outline-none focus:bg-red-50" required>
-                    <button type="submit" class="w-full bg-black text-white py-5 font-black uppercase italic text-2xl skew-btn hover:bg-red-600 transition">
-                        <span class="skew-content">Rejoindre la liste</span>
+                    <label class="block text-[10px] font-black uppercase">Email Secret</label>
+                    <input type="email" placeholder="KYANTO@GHOST.COM" class="w-full border-4 border-black p-4 font-black uppercase outline-none focus:bg-red-50 text-xl" required>
+                    <button type="submit" class="w-full bg-black text-white py-5 font-black uppercase italic text-2xl skew-btn hover:bg-red-600 transition shadow-[5px_5px_0px_#ff0000]">
+                        <span class="skew-content">REJOINDRE LE CLAN</span>
                     </button>
                 </div>
-                <p class="mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">En t'inscrivant, tu acceptes de recevoir nos alertes de stock.</p>
             </form>
         </div>
     </main>
 
-    <footer class="bg-black text-white pt-20 pb-10 border-t-8 border-red-600 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
+    <footer class="bg-black text-white pt-20 pb-10 border-t-8 border-red-600 px-6 mt-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div class="md:col-span-2">
-                <span class="text-4xl font-black italic uppercase tracking-tighter">KY<span class="text-red-600">ANTO</span></span>
-                <p class="mt-4 text-gray-400 font-bold max-w-sm mx-auto md:mx-0">Marque indépendante fusionnant le streetwear contemporain et l'esthétique nippone. Deux identités, une seule direction.</p>
+                <span class="text-4xl font-black italic uppercase">KY<span class="text-red-600">ANTO</span></span>
+                <p class="mt-4 text-gray-400 font-bold max-w-sm uppercase text-xs tracking-widest">Deux identités, une seule direction. Streetwear inspired by Japan.</p>
             </div>
             <div>
-                <h4 class="font-black uppercase mb-6 text-red-600">Menu</h4>
-                <ul class="space-y-4 font-bold uppercase text-sm">
+                <h4 class="font-black uppercase mb-6 text-red-600 italic">Navigation</h4>
+                <ul class="space-y-4 font-black uppercase text-xs tracking-widest">
                     <li><button @click="page = 'home'">Accueil</button></li>
                     <li><button @click="page = 'shop'">Boutique</button></li>
                     <li><button @click="page = 'drop'">Drops</button></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-black uppercase mb-6 text-red-600">Réseaux</h4>
-                <ul class="space-y-4 font-bold uppercase text-sm">
+                <h4 class="font-black uppercase mb-6 text-red-600 italic">Social</h4>
+                <ul class="space-y-4 font-black uppercase text-xs tracking-widest">
                     <li><a href="#" class="hover:text-red-600">Instagram</a></li>
                     <li><a href="#" class="hover:text-red-600">TikTok</a></li>
-                    <li><a href="#" class="hover:text-red-600">Twitter</a></li>
                 </ul>
             </div>
         </div>
         <div class="text-center pt-10 border-t border-white/10">
-            <p class="text-[10px] font-black text-gray-500 tracking-[0.5em]">© 2026 KYANTO CLOTHING - TOUS DROITS RÉSERVÉS</p>
+            <p class="text-[10px] font-black text-gray-500 tracking-[0.5em]">© 2026 KYANTO CLOTHING - CRAFTED WITH PASSION</p>
         </div>
     </footer>
 
